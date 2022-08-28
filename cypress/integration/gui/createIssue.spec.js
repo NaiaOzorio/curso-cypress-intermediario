@@ -2,26 +2,18 @@
 
 const faker = require('faker')
 
-describe('Create Issue', () => {
-  const issue = {
-    title: `issue-${faker.random.uuid()}`,
-    description: faker.random.words(3),
-    project: {
-      name: `project-${faker.random.uuid()}`,
-      description: faker.random.words(5)
-    }
-  }
+const newProject = {
+    Project: `project-${faker.random.uuid()}`,
+    Description: faker.random.words(5)
+   }
 
-  beforeEach(() => {
-    cy.login()
-    cy.gui_createProject(issue.project)
-  })
+describe ('createIssue', () => {
+    beforeEach(() => cy.login())
+ 
+  it ('Sucessfully createIssue', () => {  
+    cy.createProject(newProject)
 
-  it('successfully create issue', () => {
-    cy.gui_createIssue(issue)
+  cy.visit(`${Cypress.config('baseUrl')}${Cypress.env('user_name')}/${newProject.Project}`)
 
-    cy.get('.issue-details')
-      .should('contain', issue.title)
-      .and('contain', issue.description)
   })
 })
